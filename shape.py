@@ -69,7 +69,8 @@ def gamma(image_path, threshold=240, point_color="blue", point_size=5):
 
     # Plot Coordinates
     plt.scatter(rows, cols, c=point_color, s= point_size, alpha=0.5, label="Non-white points")
-    plt.xlabel("Circulation Distribution")
+    plt.xlabel("Wing Span (ft)") 
+    plt.ylabel("Circulation Distribution")
     plt.legend([f"Lift: {lift} lb-ft"], loc ="upper right")
     plt.show()
 

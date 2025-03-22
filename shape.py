@@ -29,11 +29,15 @@ def extract_image_points(image_path, threshold=240):
     # Coordinate Setting
     rows, cols =np.where(non_white_pixels)
 
-    print("X Coordinates:", rows)
-    print("Y Coordinates:", cols)
-    print("X length:", len(rows))
-    print("Y length:", len(cols))
-    print("Y Coordinate Max:", np.max(cols))
+    if len(rows) == 0 or len(cols) == 0:
+        print("Error! Image uploaded needs to be an enclosed shape.")
+        raise ValueError("Image uploaded needs to be an enclosed shape.")
+    else:
+        print("X Coordinates:", rows)
+        print("Y Coordinates:", cols)
+        print("X length:", len(rows))
+        print("Y length:", len(cols))
+        print("Y Coordinate Max:", np.max(cols))
 
     return rows, cols
 
@@ -57,7 +61,7 @@ def gamma(image_path, threshold=240, point_color="blue", point_size=5):
     image = Image.open(image_path)
 
     Gamma = trapezoid_rule(rows, cols)
-    lift=rho*U*Gamma
+    lift=round(rho*U*Gamma, 2)
 
     print("Gamma:", Gamma)
     print(f"Wing Span: {rows[-1]-rows[0]} ft")
@@ -70,5 +74,5 @@ def gamma(image_path, threshold=240, point_color="blue", point_size=5):
 
 #-----------------------------------------------------------------------------------------
 
-gamma("Capture.PNG", threshold=240, point_color='blue', point_size=2)
+gamma("Capture3.PNG", threshold=240, point_color='blue', point_size=2)
 

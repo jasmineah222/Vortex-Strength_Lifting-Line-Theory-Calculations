@@ -4,6 +4,7 @@ from PIL import Image
 
 rho= 0.002377 # slug/ft^3
 U = 80.38058  # ft/s
+alpha_induced = 1 # degrees (induced angle)
 
 # --------------------------------------------Set-Up----------------------------------------
 # Image Upload
@@ -57,22 +58,22 @@ def trapezoid_rule(x_array,y_array):
 def gamma(image_path, threshold=240, point_color="blue", point_size=5):
     rows, cols = extract_image_points(image_path, threshold)
 
-    # Load the image
-    image = Image.open(image_path)
-
     Gamma = trapezoid_rule(rows, cols)
     lift=round(rho*U*Gamma, 2)
+    drag=round(rho*U*Gamma*alpha_induced, 2)
 
     print("Gamma:", Gamma)
     print(f"Wing Span: {rows[-1]-rows[0]} ft")
     print(f"Lift: {lift} lb-ft")
+    print(f"Drag: {drag} lb-ft")
 
     # Plot Coordinates
     plt.scatter(rows, cols, c=point_color, s= point_size, alpha=0.5, label="Non-white points")
-    plt.legend()
+    plt.xlabel("Circulation Distribution")
+    plt.legend([f"Lift: {lift} lb-ft"], loc ="upper right")
     plt.show()
 
 #-----------------------------------------------------------------------------------------
 
-gamma("Capture3.PNG", threshold=240, point_color='blue', point_size=2)
+gamma("Capture4.jpg", threshold=240, point_color='blue', point_size=2)
 
